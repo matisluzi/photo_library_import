@@ -436,6 +436,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Photo Library Import/Preview Content\"";
+				DEVELOPMENT_TEAM = L7DJ3KR7FK;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "Photo Library Import/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -455,6 +456,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Photo Library Import/Preview Content\"";
+				DEVELOPMENT_TEAM = L7DJ3KR7FK;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "Photo Library Import/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
