@@ -9,66 +9,96 @@
 import SwiftUI
 import Photos
 
-func getPermission() {
-    if PHPhotoLibrary.authorizationStatus() == .notDetermined {
-        PHPhotoLibrary.requestAuthorization({status in})
-    }
-}
-
+// Content View
 struct ContentView: View {
+    
+    // Variables that change UI elements
     @State var no_of_files = 0
     @State var no_of_files_failed = 0
     @State var failed_files = [String]()
     @State var failed_files_str = ""
     @State var progress_visible = false
     @State var progress_finished = false
+    
+    // Body View - Main View
     var body: some View {
-        VStack(alignment: .center, spacing: 20) {
-            Spacer()
-            Text("import photos into camera roll")
+        VStack(alignment: .leading, spacing: 20) {
+                
+            // Title text
+            Text("Photo Library Import")
                 .font(.title)
                 .bold()
-            Text("after uploading photos to app data, press button below to upload photos to camera roll:")
-            Button(
-                action: {
-                    self.uploadPhotos()
-            },
-                label: { Text("upload to camera roll") }
-            ).onAppear(perform: getPermission)
+            
             Spacer()
-            if progress_visible {
-                Text("uploading file " + String(no_of_files) + "...")
+            
+            // Instruction text and image
+            Group {
+                Text("Instructions")
+                    .font(.headline)
+                
+                Text("Use iTunes (or Finder) to upload the pictures into the app's folder, like the picture below:")
+                
+                Image("instructions")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .cornerRadius(2)
+                    .shadow(radius: 5)
+                    .pinchToZoom()
+                    .zIndex(1)
+                    
+                Text("Afterwards, press the button below to upload the photos into the Camera Roll.")
             }
-            else {
-                Text("uploading file " + String(no_of_files) + "...").hidden()
+            
+            Spacer()
+            
+            // Upload button
+            HStack {
+                Spacer()
+                Button(action: self.uploadPhotos) {
+                    Text("Upload")
+                        .foregroundColor(.white)
+                        .bold()
+                }
+                .padding(.horizontal, 40)
+                .padding(.vertical, 15)
+                .background(Color(.systemRed))
+                .cornerRadius(50)
+                Spacer()
             }
-            if progress_finished {
-                Text("uploaded " + String(no_of_files - no_of_files_failed) + " files sucessfully.")
-                    .foregroundColor(.green)
-            }
-            else {
-                Text("uploaded " + String(no_of_files - no_of_files_failed) + " files sucessfully.")
-                    .foregroundColor(.green)
-                    .hidden()
-            }
-            if no_of_files_failed > 0 {
-                Text(String(no_of_files_failed) + " files failed to be uploaded:")
-                    .foregroundColor(.red)
-                ScrollView(.vertical, showsIndicators: false) {
-                    VStack(alignment: .center, spacing: 10){
-                        Text(failed_files_str)
+            
+            Spacer()
+            
+            // Conditional elements based on progress
+            Group() {
+                // Progress text appears when photos are uploading, disappears when uploading is finished
+                if progress_visible {
+                    Text("uploading file " + String(no_of_files) + "...")
+                }
+                
+                // Finished prompt appears when the uploading process is finished
+                if progress_finished {
+                    Text("Uploaded " + String(no_of_files - no_of_files_failed) + " files sucessfully.")
+                        .foregroundColor(.green)
+                }
+                
+                // This text appears when some files have not uploaded successfully
+                if no_of_files_failed > 0 {
+                    Text(String(no_of_files_failed) + " files failed to be uploaded:")
+                        .foregroundColor(.red)
+                    
+                    // Scroll view of failed files
+                    ScrollView(.vertical, showsIndicators: false) {
+                        VStack(alignment: .center, spacing: 10){
+                            Text(failed_files_str)
+                        }
                     }
                 }
             }
-            else {
-                Text("uploaded " + String(no_of_files - no_of_files_failed) + " files sucessfully.")
-                    .foregroundColor(.green)
-                    .hidden()
-            }
-            Spacer()
-        }
+        }.padding()
     }
+    // END OF MAIN VIEW
     
+    // Function that uploads pictures
     func uploadPhotos() {
         progress_visible = true
         let fileManager = FileManager.default
@@ -137,6 +167,14 @@ struct ContentView: View {
     }
 }
 
+// Get user permission to access photos
+func getPermission() {
+    if PHPhotoLibrary.authorizationStatus() == .notDetermined {
+        PHPhotoLibrary.requestAuthorization({status in})
+    }
+}
+
+// DEBUG
 struct Content_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()

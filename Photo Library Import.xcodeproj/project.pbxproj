@@ -15,6 +15,7 @@
 		B6005BB424D04C61009D589F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6005BB224D04C61009D589F /* LaunchScreen.storyboard */; };
 		B6005BBF24D04C61009D589F /* Photo_Library_ImportTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6005BBE24D04C61009D589F /* Photo_Library_ImportTests.swift */; };
 		B6005BCA24D04C61009D589F /* Photo_Library_ImportUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6005BC924D04C61009D589F /* Photo_Library_ImportUITests.swift */; };
+		B6F9321824E05D9000F9C356 /* pinchToZoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F9321724E05D9000F9C356 /* pinchToZoom.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		B6005BC524D04C61009D589F /* Photo Library ImportUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Photo Library ImportUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6005BC924D04C61009D589F /* Photo_Library_ImportUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo_Library_ImportUITests.swift; sourceTree = "<group>"; };
 		B6005BCB24D04C61009D589F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B6F9321724E05D9000F9C356 /* pinchToZoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pinchToZoom.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +104,7 @@
 				B6005BA724D04C5F009D589F /* AppDelegate.swift */,
 				B6005BA924D04C5F009D589F /* SceneDelegate.swift */,
 				B6005BAB24D04C5F009D589F /* ContentView.swift */,
+				B6F9321724E05D9000F9C356 /* pinchToZoom.swift */,
 				B6005BAD24D04C61009D589F /* Assets.xcassets */,
 				B6005BB224D04C61009D589F /* LaunchScreen.storyboard */,
 				B6005BB524D04C61009D589F /* Info.plist */,
@@ -269,6 +272,7 @@
 			files = (
 				B6005BA824D04C5F009D589F /* AppDelegate.swift in Sources */,
 				B6005BAA24D04C5F009D589F /* SceneDelegate.swift in Sources */,
+				B6F9321824E05D9000F9C356 /* pinchToZoom.swift in Sources */,
 				B6005BAC24D04C5F009D589F /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
