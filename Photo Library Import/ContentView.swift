@@ -92,24 +92,6 @@ struct ContentView: View {
                                 .foregroundColor(.primary)
                                 .cornerRadius(3)
                         }
-                        // Finished prompt appears when the uploading process is finished
-                        if progress_finished {
-                            Text("Uploaded " + String(no_of_files - no_of_files_failed) + " files sucessfully.")
-                                .foregroundColor(.green)
-                        }
-                        
-                        // This text appears when some files have not uploaded successfully
-                        if no_of_files_failed > 0 {
-                            Text(String(no_of_files_failed) + " files failed to be uploaded:")
-                                .foregroundColor(.red)
-                            
-                            // Scroll view of failed files
-                            ScrollView(.vertical, showsIndicators: false) {
-                                VStack(alignment: .center, spacing: 10){
-                                    Text(failed_files_str)
-                                }
-                            }
-                        }
                     }
                 }
             }
@@ -122,7 +104,11 @@ struct ContentView: View {
                         .cornerRadius(5)
                     VStack(spacing: 20) {
                         Text("Uploaded " + String(no_of_files - no_of_files_failed) + " files sucessfully.")
-                        Button(action: {progress_finished = false}, label: {
+                        Button(action: {
+                            progress_finished = false
+                            no_of_files = 0
+                            no_of_files_failed = 0
+                        }, label: {
                             Text("Ok")
                                 .foregroundColor(.white)
                                 .bold()
@@ -151,7 +137,11 @@ struct ContentView: View {
                             Text(failed_files_str)
                         }
                         
-                        Button(action: {progress_finished = false}, label: {
+                        Button(action: {
+                                progress_finished = false
+                                no_of_files = 0
+                                no_of_files_failed = 0
+                        }, label: {
                             Text("Ok")
                                 .foregroundColor(.white)
                                 .bold()
@@ -198,7 +188,9 @@ struct ContentView: View {
     }
     func uploadPhotos() {
         countPhotos()
-        progress_visible = true
+        withAnimation(.easeInOut) {
+            progress_visible = true
+        }
         let fileManager = FileManager.default
         DispatchQueue.global().async {
             do {
@@ -226,7 +218,9 @@ struct ContentView: View {
                             try PHPhotoLibrary.shared().performChangesAndWait({
                                 PHAssetChangeRequest.creationRequestForAssetFromImage(atFileURL: file)
                             })
-                            progress += 1/Double(no_of_files)
+                            withAnimation(.easeInOut) {
+                                progress += 1/Double(no_of_files)
+                            }
                         }
                         catch {
                             self.no_of_files_failed += 1
@@ -242,7 +236,9 @@ struct ContentView: View {
                             try PHPhotoLibrary.shared().performChangesAndWait({
                                 PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: file)
                             })
-                            progress += 1/Double(no_of_files)
+                            withAnimation(.easeInOut) {
+                                progress += 1/Double(no_of_files)
+                            }
                         }
                         catch {
                             self.no_of_files_failed += 1
@@ -252,7 +248,10 @@ struct ContentView: View {
                     }
                 }
                 self.progress_visible = false
-                self.progress_finished = true
+                progress = 0
+                withAnimation(.easeInOut) {
+                    self.progress_finished = true
+                }
             } catch {
                 print(error)
             }
