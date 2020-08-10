@@ -1,4 +1,4 @@
-# photo_library_import
+# Photo Library Import
 
 Check Releases for IPA file to sideload to iPhone.
 
