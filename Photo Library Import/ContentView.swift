@@ -22,50 +22,33 @@ struct ContentView: View {
     @State var progress_finished = false
     @State var progress:Double = 0
     
-    // Body View - Main View
     var body: some View {
         ZStack(alignment: .center) {
             VStack(alignment: .leading, spacing: 20) {
                 
-                // Title text
-                Text("Photo Library Import")
-                    .font(.title)
-                    .bold()
-                
                 Spacer()
                 
-                // Instruction text and image
-                Group {
-                    Text("Instructions")
-                        .font(.headline)
-                    
-                    Text("Use iTunes (or Finder) to upload the pictures into the app's folder, like the picture below:")
-                    
-                    Image("instructions")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .cornerRadius(2)
-                        .shadow(radius: 5)
-                        .pinchToZoom()
-                        .zIndex(1)
-                    
-                    Text("Afterwards, press the button below to upload the photos into the Camera Roll.")
-                }
+                // Title text
+                title
+                Spacer()
                 
+                // Instructions
+                info
                 Spacer()
                 
                 // Upload button
                 HStack {
                     Spacer()
-                    Button(action: self.uploadPhotos) {
+                    Button(action: uploadPhotos) {
                         Text("Upload")
                             .foregroundColor(.white)
                             .bold()
                     }
                     .padding(.horizontal, 40)
                     .padding(.vertical, 15)
-                    .background(Color(.systemRed))
+                    .background(Color(.systemIndigo))
                     .cornerRadius(20)
+                    
                     Spacer()
                 }
                 
@@ -75,28 +58,65 @@ struct ContentView: View {
             // end of vstack
             
             // progress view
+            progressView
+            
+            // finished view
+            finishedView
+        }
+    }
+    
+    private var title: some View {
+        Text("Photo Library Import")
+            .font(.largeTitle)
+            .bold()
+    }
+    
+    private var info: some View {
+        VStack(alignment: .leading, spacing: 15) {
+            Text("Instructions")
+                .font(.system(size: 22, weight: .bold, design: .default))
+            
+            Text("Use iTunes (or Finder) to upload the pictures into the app's folder, like the picture below:")
+            
+            Image("instructions")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .cornerRadius(2)
+                .shadow(radius: 5)
+                .pinchToZoom()
+                .zIndex(1)
+            
+            Text("Afterwards, press the button below to upload the photos into the Camera Roll.")
+        }
+    }
+    
+    private var progressView: some View {
+        ZStack {
             if progress_visible {
-                ZStack {
-                    BlurView(style: .regular)
-                        .frame(width: 200, height: 100)
-                        .cornerRadius(5)
-                    VStack(spacing: 20) {
-                        Text("Uploading images...")
-                        ZStack(alignment: .leading) {
-                            Rectangle()
-                                .frame(width: 180, height: 10)
-                                .foregroundColor(.secondary)
-                                .cornerRadius(3)
-                            Rectangle()
-                                .frame(width: 180*CGFloat(progress), height: 10)
-                                .foregroundColor(.primary)
-                                .cornerRadius(3)
-                        }
+                BlurView(style: .regular)
+                    .frame(width: 200, height: 100)
+                    .cornerRadius(5)
+                VStack(spacing: 20) {
+                    Text("Uploading images...")
+                    ZStack(alignment: .leading) {
+                        Rectangle()
+                            .frame(width: 180, height: 10)
+                            .foregroundColor(.secondary)
+                            .cornerRadius(3)
+                        Rectangle()
+                            .frame(width: 180*CGFloat(progress), height: 10)
+                            .foregroundColor(.primary)
+                            .cornerRadius(3)
                     }
                 }
             }
+        }
+    }
+    
+    private var finishedView: some View {
+        VStack {
             
-            // finished view
+            // if no files failed
             if progress_finished && no_of_files_failed == 0 {
                 ZStack {
                     BlurView(style: .regular)
@@ -115,12 +135,13 @@ struct ContentView: View {
                                 .padding(.horizontal, 20)
                                 .padding(.vertical, 5)
                         })
-                        .background(Color(.red))
+                        .background(Color(.systemIndigo))
                         .cornerRadius(5)
                     }
                 }.frame(width: 300, height: 100)
             }
             
+            // if there are files that failed
             else if progress_finished && no_of_files_failed > 0 {
                 ZStack {
                     BlurView(style: .regular)
@@ -138,9 +159,9 @@ struct ContentView: View {
                         }
                         
                         Button(action: {
-                                progress_finished = false
-                                no_of_files = 0
-                                no_of_files_failed = 0
+                            progress_finished = false
+                            no_of_files = 0
+                            no_of_files_failed = 0
                         }, label: {
                             Text("Ok")
                                 .foregroundColor(.white)
@@ -156,6 +177,7 @@ struct ContentView: View {
             }
         }
     }
+    
     // END OF MAIN VIEW
     
     // Function that uploads pictures
@@ -258,6 +280,7 @@ struct ContentView: View {
         }
     }
 }
+
 
 // Get user permission to access photos
 func getPermission() {
