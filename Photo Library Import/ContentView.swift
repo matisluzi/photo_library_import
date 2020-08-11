@@ -13,6 +13,7 @@ import Photos
 struct ContentView: View {
     
     // Variables that change UI elements
+    @State var buttonBG: UIColor = .systemIndigo
     @State var varHeight:CGFloat = 0
     @State var no_of_files = 0
     @State var no_of_files_failed = 0
@@ -34,22 +35,20 @@ struct ContentView: View {
                 
                 // Instructions
                 info
+                    .zIndex(1)
                 Spacer()
                 
                 // Upload button
-                HStack {
-                    Spacer()
+                HStack(alignment: .center) {
                     Button(action: uploadPhotos) {
                         Text("Upload")
                             .foregroundColor(.white)
                             .bold()
+                            .frame(minWidth: nil, idealWidth: .infinity, maxWidth: .infinity, minHeight: nil, idealHeight: nil, maxHeight: nil, alignment: .center)
+                            .padding(.vertical, 20)
+                            .background(Color(buttonBG))
+                            .cornerRadius(20)
                     }
-                    .padding(.horizontal, 40)
-                    .padding(.vertical, 15)
-                    .background(Color(.systemIndigo))
-                    .cornerRadius(20)
-                    
-                    Spacer()
                 }
                 
                 Spacer()
@@ -86,7 +85,7 @@ struct ContentView: View {
                 .pinchToZoom()
                 .zIndex(1)
             
-            Text("Afterwards, press the button below to upload the photos into the Camera Roll.")
+            Text("Afterwards, press the button below to upload the photos into the Camera Roll.").zIndex(0)
         }
     }
     
@@ -134,9 +133,9 @@ struct ContentView: View {
                                 .bold()
                                 .padding(.horizontal, 20)
                                 .padding(.vertical, 5)
+                                .background(Color(.systemIndigo))
+                                .cornerRadius(5)
                         })
-                        .background(Color(.systemIndigo))
-                        .cornerRadius(5)
                     }
                 }.frame(width: 300, height: 100)
             }
@@ -168,9 +167,9 @@ struct ContentView: View {
                                 .bold()
                                 .padding(.horizontal, 20)
                                 .padding(.vertical, 5)
+                                .background(Color(.systemIndigo))
+                                .cornerRadius(5)
                         })
-                        .background(Color(.red))
-                        .cornerRadius(5)
                         
                     }.padding(20)
                 }.frame(width: 300, height: 230)
