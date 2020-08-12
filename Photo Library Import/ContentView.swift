@@ -24,50 +24,51 @@ struct ContentView: View {
     @State var progress:Double = 0
     
     var body: some View {
-        ZStack(alignment: .center) {
-            VStack(alignment: .leading, spacing: 20) {
-                
-                Spacer()
-                
-                // Title text
-                title
-                Spacer()
-                
-                // Instructions
-                info
-                    .zIndex(1)
-                Spacer()
-                
-                // Upload button
-                HStack(alignment: .center) {
-                    Button(action: uploadPhotos) {
-                        Text("Upload")
-                            .foregroundColor(.white)
-                            .bold()
-                            .frame(minWidth: nil, idealWidth: .infinity, maxWidth: .infinity, minHeight: nil, idealHeight: nil, maxHeight: nil, alignment: .center)
-                            .padding(.vertical, 20)
-                            .background(Color(buttonBG))
-                            .cornerRadius(20)
+        GeometryReader { geometry in
+            ZStack(alignment: .center) {
+                VStack(alignment: .leading, spacing: 20) {
+                    
+                    Spacer()
+                    
+                    // Title text
+                    title
+                    Spacer()
+                    
+                    // Instructions
+                    info
+                        .zIndex(1)
+                    Spacer()
+                    
+                    // Upload button
+                    HStack(alignment: .center) {
+                        Button(action: uploadPhotos) {
+                            Text("Upload")
+                                .foregroundColor(.white)
+                                .bold()
+                                .frame(minWidth: nil, idealWidth: .infinity, maxWidth: .infinity, minHeight: 57, idealHeight: nil, maxHeight: nil, alignment: .center)
+                                .background(Color(buttonBG))
+                                .cornerRadius(10)
+                        }
                     }
-                }
+                    
+                    Spacer()
+                    
+                }.padding()
+                // end of vstack
                 
-                Spacer()
+                // progress view
+                progressView
                 
-            }.padding()
-            // end of vstack
-            
-            // progress view
-            progressView
-            
-            // finished view
-            finishedView
+                // finished view
+                finishedView
+            }
         }
     }
     
     private var title: some View {
         Text("Photo Library Import")
             .font(.largeTitle)
-            .bold()
+            .fontWeight(.heavy)
     }
     
     private var info: some View {
@@ -76,6 +77,7 @@ struct ContentView: View {
                 .font(.system(size: 22, weight: .bold, design: .default))
             
             Text("Use iTunes (or Finder) to upload the pictures into the app's folder, like the picture below:")
+                .font(.body)
             
             Image("instructions")
                 .resizable()
